@@ -13,7 +13,7 @@ let mix = require('laravel-mix');
 
  mix.js('src/app.js', 'dist/')
       .copy('src/index.html', 'dist/index.html')
-      // .copy('src/shaders', 'dist/shaders')
+      .copy('src/shaders', 'dist/shaders')
       // .options({processCssUrls: false})
       .sass('src/scss/app.scss', 'dist/app.css')
       .webpackConfig({

@@ -1,4 +1,4 @@
-import {Scene, WebGLRenderer, PerspectiveCamera, Vector3, AmbientLight} from 'three'
+import {Scene, WebGLRenderer, PerspectiveCamera, Vector3, AmbientLight, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide} from 'three'
 
 /**
 * Build basic scene
@@ -21,6 +21,11 @@ export default class BasicScene {
 
     this.light = new AmbientLight(0x404040)
     this.scene.add(this.light)
+    let geometry = new PlaneGeometry(10, 10, 1, 1);
+    let material = new MeshBasicMaterial({ color: 0xff0000, side: DoubleSide });
+    let plane = new Mesh(geometry, material);
+
+    this.scene.add(plane)
   }
 
   add (element) {
