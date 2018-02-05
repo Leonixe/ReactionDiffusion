@@ -1,5 +1,7 @@
 import {Scene, WebGLRenderer, PerspectiveCamera, Vector3, AmbientLight, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide} from 'three'
 
+import Fbo from './fbo'
+
 /**
 * Build basic scene
 */
@@ -21,10 +23,13 @@ export default class BasicScene {
 
     this.light = new AmbientLight(0x404040)
     this.scene.add(this.light)
-    let geometry = new PlaneGeometry(10, 10, 1, 1);
-    let material = new MeshBasicMaterial({ color: 0xff0000, side: DoubleSide });
-    let plane = new Mesh(geometry, material);
 
+
+    this.testFbo = new Fbo(require('../shaders/rd.vert'), require('../shaders/rd.frag'), this.renderer)    
+
+    let geometry = new PlaneGeometry(10, 10, 1, 1);
+    let material = new MeshBasicMaterial({ map: this.testFbo.rtt.texture, side: DoubleSide });
+    let plane = new Mesh(geometry, material);
     this.scene.add(plane)
   }
 
@@ -46,7 +51,8 @@ export default class BasicScene {
     this.renderer.setSize(screenWidth, screenHeight)
   }
 
-  render (delta) {
+  render (delta) {    
+    this.testFbo.update()
     this.renderer.render(this.scene, this.camera)
   }
 }

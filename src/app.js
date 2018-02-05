@@ -79,6 +79,8 @@ function animate (delta) {
   //   }
   // }
 
+  scene.render(delta)
+
   requestAnimationFrame(animate)
 }
 
