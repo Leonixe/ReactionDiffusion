@@ -22,5 +22,10 @@
   "homepage": "https://github.com/Leonixe/ReactionDiffusion#readme",
   "devDependencies": {
     "laravel-mix": "^2.0.0"
+  },
+  "dependencies": {
+    "gsap": "^1.20.3",
+    "three": "^0.89.0",
+    "three-orbit-controls": "^82.1.0"
   }
 }

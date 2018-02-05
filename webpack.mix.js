@@ -11,8 +11,22 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('src/app.js', 'dist/')
-   .sass('src/app.scss', 'dist/');
+ mix.js('src/app.js', 'dist/')
+      .copy('src/index.html', 'dist/index.html')
+      // .copy('src/shaders', 'dist/shaders')
+      // .options({processCssUrls: false})
+      .sass('src/scss/app.scss', 'dist/app.css')
+      .webpackConfig({
+         module: {
+           rules: [
+             {
+               test: /\.frag$|\.vert$/i,
+               use: 'raw-loader'
+             }
+           ]
+         }
+       })
+      .setPublicPath('dist')
 
 // Full API
 // mix.js(src, output);
