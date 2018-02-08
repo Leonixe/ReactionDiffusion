@@ -10,7 +10,6 @@ let scene = new Scene(
 
 let lastUpdateDelta = 0
 
-
 const deltaTime = 1000
 // const canvas =  document.getElementById('canvas')
 // const ctx = canvas.getContext('2d')
@@ -78,9 +77,7 @@ function animate (delta) {
   //     ctx.fillRect(x , y , 4, 4)
   //   }
   // }
-
-  scene.render(delta)
-
+  scene.render(delta);
   requestAnimationFrame(animate)
 }
 

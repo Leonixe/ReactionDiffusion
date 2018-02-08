@@ -1,6 +1,7 @@
-import {Scene, WebGLRenderer, PerspectiveCamera, Vector3, AmbientLight, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide} from 'three'
+import {Scene, WebGLRenderer, PerspectiveCamera, Vector3, AmbientLight, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide, Vector2} from 'three'
 
 import Fbo from './fbo'
+import { debug } from 'util';
 
 /**
 * Build basic scene
@@ -24,13 +25,40 @@ export default class BasicScene {
     this.light = new AmbientLight(0x404040)
     this.scene.add(this.light)
 
+    this.start = new Fbo(require('../shaders/basic.vert'), require('../shaders/start.frag'), this.renderer, { resolution: { type: "v2", value: new Vector2(256, 256)}})
+    this.start.update()
+    
 
-    this.testFbo = new Fbo(require('../shaders/rd.vert'), require('../shaders/rd.frag'), this.renderer)    
+    let uniformA = {
+      resolution: { type: "v2", value: new Vector2(256, 256) }, 
+      texture: this.start.texture,
+      delta: 1.0,
+      feed: 0.037,
+      kill: 0.06
+    }
 
-    let geometry = new PlaneGeometry(10, 10, 1, 1);
-    let material = new MeshBasicMaterial({ map: this.testFbo.rtt.texture, side: DoubleSide });
-    let plane = new Mesh(geometry, material);
-    this.scene.add(plane)
+    this.bufferA = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), this.renderer, uniformA)
+    this.bufferA.update()
+
+    let uniformB = {
+      resolution: { type: "v2", value: new Vector2(256, 256) },
+      texture: this.bufferA.texture,
+      delta: 1.0,
+      feed: 0.037,
+      kill: 0.06
+    }
+
+    this.bufferB = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), this.renderer, uniformB)
+
+    this.lastOutput = this.bufferA;
+    this.input = null;
+    this.output = null;
+
+
+    let geometry = new PlaneGeometry(25, 25, 1, 1);
+    let material = new MeshBasicMaterial({ map: this.start.texture, side: DoubleSide });
+    this.plane = new Mesh(geometry, material);
+    this.scene.add(this.plane)
   }
 
   add (element) {
@@ -51,8 +79,19 @@ export default class BasicScene {
     this.renderer.setSize(screenWidth, screenHeight)
   }
 
-  render (delta) {    
-    this.testFbo.update()
+  render (delta) {
+
+    this.input = this.lastOutput;
+    this.output = (this.lastOutput === this.bufferA) ? this.bufferB : this.bufferA;
+    this.lastOutput = this.output;
+
+    this.lastOutput.shader.uniforms.texture = this.input.texture
+
+    this.bufferA.update()
+    this.bufferB.update()
+
+    this.plane.material.map = this.output.texture;
+    
     this.renderer.render(this.scene, this.camera)
   }
 }

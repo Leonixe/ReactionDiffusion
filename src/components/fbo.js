@@ -1,32 +1,40 @@
-import * as THREE from 'three'
-
-// texture is stored here => FBO.rtt.texture
+import { ShaderMaterial, Scene, OrthographicCamera, WebGLRenderTarget, BufferGeometry, BufferAttribute, Mesh, NearestFilter, RGBFormat, FloatType } from 'three'
 
 class FBO {
-    constructor(vert, frag, renderer) {        
-        this.width = 16
-        this.height = 16
+    constructor(vert, frag, renderer, customUniforms) {        
+        this.width = 256
+        this.height = 256
 
         this.vert = vert
         this.frag = frag
+        this.customUniforms = customUniforms != null ? customUniforms : {}
+        
         this.renderer = renderer
-        this.past = null
 
         this.init(this.renderer)
     }
 
     createShader() {
 
-        this.simulationShader = new THREE.ShaderMaterial({
-            uniforms: {
-                utime: { type: "f", value: 0 },
-                uPast: { type: "t", value: this.past },
-            },
+        this.shader = new ShaderMaterial({
+            uniforms: this.customUniforms,
             vertexShader: this.vert,
             fragmentShader: this.frag,
             transparent: true
         })
 
+    }
+
+    get texture(){
+        return this.rtt.texture;
+    }
+
+    get textureWidth() {
+        return this.width;
+    }
+
+    get textureHeight() {
+        return this.height;
     }
 
     init(renderer) {
@@ -48,36 +56,31 @@ class FBO {
         }
 
         //3 rtt setup
-        this.scene = new THREE.Scene()
-        this.orthoCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 1 / Math.pow(2, 53), 1)
+        this.scene = new Scene()
+        this.orthoCamera = new OrthographicCamera(-1, 1, 1, -1, 1 / Math.pow(2, 53), 1)
 
         //4 create a target texture
         let options = {
-            minFilter: THREE.NearestFilter,//important as we want to sample square pixels
-            magFilter: THREE.NearestFilter,//
-            format: THREE.RGBFormat,//could be RGBAFormat
-            type: THREE.FloatType//important as we need precise coordinates (not ints)
+            minFilter: NearestFilter,//important as we want to sample square pixels
+            magFilter: NearestFilter,//
+            format: RGBFormat,//could be RGBAFormat
+            type: FloatType//important as we need precise coordinates (not ints)
         }
-        this.rtt = new THREE.WebGLRenderTarget(this.width, this.height, options)
+        this.rtt = new WebGLRenderTarget(this.width, this.height, options)
 
         //5 the simulation:
         //create a bi-unit quadrilateral and uses the simulation material to update the Float Texture
-        let geom = new THREE.BufferGeometry()
-        geom.addAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0]), 3))
-        geom.addAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0]), 2))
-        this.scene.add(new THREE.Mesh(geom, this.simulationShader))
-        this.renderer = renderer
+        let geom = new BufferGeometry()
+        geom.addAttribute('position', new BufferAttribute(new Float32Array([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0]), 3))
+        geom.addAttribute('uv', new BufferAttribute(new Float32Array([0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0]), 2))
+        this.scene.add(new Mesh(geom, this.shader))
     }
 
     update() {
         //1 update the simulation and render the result in a target texture
-        if (this.renderer != undefined) {
-
-            // Update uniforms
-            this.simulationShader.uniforms.utime.value += 1
-            this.renderer.render(this.scene, this.orthoCamera, this.rtt, true)
-
-        }
+        // Update uniforms
+        // this.simulationShader.uniforms.utime.value += 1
+        this.renderer.render(this.scene, this.orthoCamera, this.rtt, true)
     }
 }
 export default FBO
