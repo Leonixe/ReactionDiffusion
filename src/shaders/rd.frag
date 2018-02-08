@@ -21,8 +21,8 @@ void main() {
     float A = uv.r;
     float B = uv.g;
 
-    float diffuseA = 0.001;
-    float diffuseB = 0.005;
+    float diffuseA = 0.1;
+    float diffuseB = 0.05;
 
     float laplA = lapl.r;
     float laplB = lapl.g;

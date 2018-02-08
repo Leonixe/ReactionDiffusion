@@ -31,10 +31,10 @@ export default class BasicScene {
 
     let uniformA = {
       resolution: { type: "v2", value: new Vector2(256, 256) }, 
-      texture: this.start.texture,
-      delta: 1.0,
-      feed: 0.037,
-      kill: 0.06
+      texture: {value: this.start.texture},
+      delta: {value: 1.0},
+      feed: {value: 0.037},
+      kill: {value: 0.06}
     }
 
     this.bufferA = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), this.renderer, uniformA)
@@ -42,10 +42,10 @@ export default class BasicScene {
 
     let uniformB = {
       resolution: { type: "v2", value: new Vector2(256, 256) },
-      texture: this.bufferA.texture,
-      delta: 1.0,
-      feed: 0.037,
-      kill: 0.06
+      texture: {value: this.bufferA.texture},
+      delta: {value: 1.0},
+      feed: {value: 0.037},
+      kill: {value: 0.06}
     }
 
     this.bufferB = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), this.renderer, uniformB)
@@ -56,7 +56,7 @@ export default class BasicScene {
 
 
     let geometry = new PlaneGeometry(25, 25, 1, 1);
-    let material = new MeshBasicMaterial({ map: this.start.texture, side: DoubleSide });
+    let material = new MeshBasicMaterial({ map: this.bufferA.texture, side: DoubleSide });
     this.plane = new Mesh(geometry, material);
     this.scene.add(this.plane)
   }
@@ -87,8 +87,8 @@ export default class BasicScene {
 
     this.lastOutput.shader.uniforms.texture = this.input.texture
 
-    this.bufferA.update()
-    this.bufferB.update()
+    this.output.update()
+    this.output.shader.uniforms.texture = this.input.texture
 
     this.plane.material.map = this.output.texture;
     
