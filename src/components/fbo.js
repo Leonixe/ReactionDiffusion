@@ -2,8 +2,8 @@ import { ShaderMaterial, Scene, OrthographicCamera, WebGLRenderTarget, BufferGeo
 
 class FBO {
     constructor(vert, frag, renderer, customUniforms) {        
-        this.width = 256
-        this.height = 256
+        this.width = 1024
+        this.height = 512
 
         this.vert = vert
         this.frag = frag

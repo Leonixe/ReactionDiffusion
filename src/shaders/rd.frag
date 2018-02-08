@@ -45,5 +45,6 @@ void main() {
     // } 
     // da = clamp(da, 0.0, 1.0);
     // db = clamp(db, 0.0, 1.0);
+    
     gl_FragColor = vec4(da, db, 0.0, 1.0);
 }
