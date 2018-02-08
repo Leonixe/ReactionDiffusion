@@ -5,33 +5,32 @@ uniform float feed;
 uniform float kill;
 
 void main() {
-//     vec2 vUv = gl_FragCoord.xy / resolution;
+    vec2 vUv = gl_FragCoord.xy / resolution;
 
-//     float step_x = 1.0 / resolution.x;
-//     float step_y = 1.0 / resolution.y;
+    float step_x = 1.0 / resolution.x;
+    float step_y = 1.0 / resolution.y;
 
-//     vec2 uv = texture2D(texture, vUv).rg;
-//     vec2 uv0 = texture2D(texture, vUv+vec2(-step_x, 0.0)).rg;
-//     vec2 uv1 = texture2D(texture, vUv+vec2(step_x, 0.0)).rg;
-//     vec2 uv2 = texture2D(texture, vUv+vec2(0.0, -step_y)).rg;
-//     vec2 uv3 = texture2D(texture, vUv+vec2(0.0, step_y)).rg;
+    vec2 uv = texture2D(texture, vUv).rg;
+    vec2 uv0 = texture2D(texture, vUv+vec2(-step_x, 0.0)).rg;
+    vec2 uv1 = texture2D(texture, vUv+vec2(step_x, 0.0)).rg;
+    vec2 uv2 = texture2D(texture, vUv+vec2(0.0, -step_y)).rg;
+    vec2 uv3 = texture2D(texture, vUv+vec2(0.0, step_y)).rg;
 
-//     vec2 lapl = (uv0 + uv1 + uv2 + uv3 - 4.0 * uv);
+    vec2 lapl = (uv0 + uv1 + uv2 + uv3 - 4.0 * uv);
 
-//     float A = uv.r;
-//     float B = uv.g;
+    float A = uv.r;
+    float B = uv.g;
 
-//     float diffuseA = 1.0;
-//     float diffuseB = 0.5;
+    float diffuseA = 1.0;
+    float diffuseB = 0.5;
 
-//     float laplA = lapl.r;
-//     float laplB = lapl.g;
+    float laplA = lapl.r;
+    float laplB = lapl.g;
 
-//     float reaction = A * B * B;
+    float reaction = A * B * B;
 
-//     float da = A + (diffuseA * laplA - reaction + feed * (1.0 - A)) * delta;
-//     float db = B + (diffuseB * laplB + reaction - (kill + feed) * B) * delta;
+    float da = A + (diffuseA * laplA - reaction + feed * (1.0 - A)) * delta;
+    float db = B + (diffuseB * laplB + reaction - (kill + feed) * B) * delta;
 
-//     gl_FragColor = vec4(da, db, 0.0, 1.0);
-        gl_FragColor = texture2D(texture, gl_FragCoord.xy / resolution);
+    gl_FragColor = vec4(da, db, 0.0, 1.0);
 }

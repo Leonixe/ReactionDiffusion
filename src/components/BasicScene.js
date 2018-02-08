@@ -33,8 +33,8 @@ export default class BasicScene {
       resolution: { type: "v2", value: new Vector2(256, 256) }, 
       texture: { type:"t", value: this.start.texture},
       delta: {type:"f", value: 1.0},
-      feed: { type: "f", value: 0.037},
-      kill: { type: "f", value: 0.06}
+      feed: { type: "f", value: 0.0545},
+      kill: { type: "f", value: 0.062}
     }
 
     this.bufferA = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), this.renderer, uniformA)
@@ -44,8 +44,8 @@ export default class BasicScene {
       resolution: { type: "v2", value: new Vector2(256, 256) },
       texture: { type: "t", value: this.bufferA.texture},
       delta: { type: "f",value: 1.0},
-      feed: { type: "f",value: 0.037},
-      kill: { type: "f",value: 0.06}
+      feed: { type: "f", value: 0.0545},
+      kill: { type: "f", value: 0.062}
     }
 
     this.bufferB = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), this.renderer, uniformB)
@@ -85,12 +85,12 @@ export default class BasicScene {
     this.output = (this.lastOutput === this.bufferA) ? this.bufferB : this.bufferA;
     this.lastOutput = this.output;
 
-    this.lastOutput.shader.uniforms.texture = this.input.texture
+    // this.lastOutput.shader.uniforms.texture = this.input.texture
 
-    this.output.shader.uniforms.texture = this.input.texture
-    this.bufferA.update()
+    this.output.shader.uniforms.texture.value = this.input.texture
+    this.output.update()
 
-    this.plane.material.map = this.bufferA.texture;
+    this.plane.material.map = this.output.texture;
     
     this.renderer.render(this.scene, this.camera)
   }
