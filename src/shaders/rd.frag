@@ -32,13 +32,13 @@ void main() {
     float da = A + (diffuseA * laplA - reaction + feed * (1.0 - A)) * delta;
     float db = B + (diffuseB * laplB + reaction - (kill + feed) * B) * delta;
 
-    if ( da > 1.0 ) {
-        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-    }
-    else if(da < 0.0) {
-        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-    }else{
-        gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
-    }
-    // gl_FragColor = vec4(da, db, 0.0, 1.0);
+    // if ( da > 1.0 ) {
+    //     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    // }
+    // else if(da < 0.1) {
+    //     gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    // }else{
+    //     gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+    // }
+    gl_FragColor = vec4(da, da, da, 1.0);
 }
