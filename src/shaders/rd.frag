@@ -1,8 +1,8 @@
 uniform vec2 resolution;
 uniform sampler2D texture;
-// uniform float delta;
-// uniform float feed;
-// uniform float kill;
+uniform float delta;
+uniform float feed;
+uniform float kill;
 
 void main() {
 //     vec2 vUv = gl_FragCoord.xy / resolution;
@@ -21,8 +21,8 @@ void main() {
 //     float A = uv.r;
 //     float B = uv.g;
 
-//     float diffuseA = 0.1;
-//     float diffuseB = 0.05;
+//     float diffuseA = 1.0;
+//     float diffuseB = 0.5;
 
 //     float laplA = lapl.r;
 //     float laplB = lapl.g;
