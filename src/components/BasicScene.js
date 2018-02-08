@@ -81,16 +81,19 @@ export default class BasicScene {
 
   render (delta) {
 
-    this.input = this.lastOutput;
-    this.output = (this.lastOutput === this.bufferA) ? this.bufferB : this.bufferA;
-    this.lastOutput = this.output;
+    for (let i=0; i<20; i++) {
+      this.input = this.lastOutput;
+      this.output = (this.lastOutput === this.bufferA) ? this.bufferB : this.bufferA;
+      this.lastOutput = this.output;
 
-    // this.lastOutput.shader.uniforms.texture = this.input.texture
+      // this.lastOutput.shader.uniforms.texture = this.input.texture
 
-    this.output.shader.uniforms.texture.value = this.input.texture
-    this.output.update()
+      this.output.shader.uniforms.texture.value = this.input.texture
+      this.output.update()
 
-    this.plane.material.map = this.output.texture;
+      this.plane.material.map = this.output.texture;
+    }
+
     
     this.renderer.render(this.scene, this.camera)
   }

@@ -16,8 +16,12 @@ void main() {
     vec2 uv1 = texture2D(texture, vUv+vec2(step_x, 0.0)).xy;
     vec2 uv2 = texture2D(texture, vUv+vec2(0.0, -step_y)).xy;
     vec2 uv3 = texture2D(texture, vUv+vec2(0.0, step_y)).xy;
+    vec2 uv4 = texture2D(texture, vUv+vec2(-step_x, step_y)).xy;
+    vec2 uv5 = texture2D(texture, vUv+vec2(-step_x, -step_y)).xy;
+    vec2 uv6 = texture2D(texture, vUv+vec2(step_x, -step_y)).xy;
+    vec2 uv7 = texture2D(texture, vUv+vec2(step_x, step_y)).xy;
 
-    vec2 lapl = ((uv0 + uv1 + uv2 + uv3) / 4.0) - uv;
+    vec2 lapl = (uv0 + uv1 + uv2 + uv3) * 0.2 + (uv4 + uv5 + uv6 + uv7) * 0.05 - uv;
 
     float A = uv.r;
     float B = uv.g;
@@ -39,7 +43,7 @@ void main() {
     // else{
     //     gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
     // } 
-    da = clamp(da, 0.0, 1.0);
-    db = clamp(db, 0.0, 1.0);
+    // da = clamp(da, 0.0, 1.0);
+    // db = clamp(db, 0.0, 1.0);
     gl_FragColor = vec4(da, db, 0.0, 1.0);
 }
