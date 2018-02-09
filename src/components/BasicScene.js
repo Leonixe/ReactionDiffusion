@@ -11,13 +11,13 @@ export default class BasicScene {
   constructor (width, height) {
 
     this.params = {
-      kill: 0.018,
-      feed: 0.051
+      kill: 0.045,
+      feed: 0.07
     }
 
     this.gui = new dat.GUI()
-    this.gui.add(this.params, 'kill').min(0.045).max(0.07).step(0.00001)
-    this.gui.add(this.params, 'feed').min(0.01).max(0.1).step(0.0001)
+    this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
+    this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
 
     this.scene = new Scene()
 
