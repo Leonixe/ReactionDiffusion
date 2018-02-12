@@ -1,80 +1,76 @@
-import {Scene, WebGLRenderer, PerspectiveCamera, Vector3, AmbientLight, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide, Vector2} from 'three'
-
+import * as THREE from 'three'
 import Fbo from './fbo'
 import { debug } from 'util';
 import dat from 'dat-gui'
-
+import ReactionDiffusionCube from './ReactionDiffusionCube'
+import { DoubleSide } from 'three';
 /**
 * Build basic scene
 */
+
+const OrbitControls = require('three-orbit-controls')(THREE)
+
 export default class BasicScene {
   constructor (width, height) {
 
     this.params = {
-      kill: 0.045,
-      feed: 0.07
+      kill: 0.062,
+      feed: 0.0545
     }
 
     this.gui = new dat.GUI()
     this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
     this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
 
-    this.scene = new Scene()
+    this.scene = new THREE.Scene()
+    this.scene.fog = new THREE.Fog(0x000000, -10, 230)
 
-    this.renderer = new WebGLRenderer({ antialias: true, alpha: true })
+    this.renderer = new THREE.WebGLRenderer({ antialias: true })
+    this.renderer.setClearColor({ color: 0x1a1a1a})
+    this.renderer.shadowMapEnabled = true;
+    // this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
-    this.camera = new PerspectiveCamera(70, width / height, 0.1, 1000)
-    this.camera.position.set(0, 0, 40)
-    this.camera.lookAt(new Vector3())
-    this.feed = 0.018;
-    this.kill = 0.051;
-    this.width = 1024;
-    this.height = 512;
+    // CAMERA
+    this.camera = new THREE.PerspectiveCamera(70, width / height, 0.1, 1000)
+    this.camera.position.set(0, 0, 50)
+    this.camera.lookAt(new THREE.Vector3())
 
+    this.controls = new OrbitControls(this.camera);
+    this.feed = this.params.feed;
+    this.kill = this.params.kill;
     document.getElementById('threeJSContainer').appendChild(this.renderer.domElement)
 
     this.onWindowResize = this.onWindowResize.bind(this)
     window.addEventListener('resize', this.onWindowResize, false)
-    this.onWindowResize()
 
-    this.light = new AmbientLight(0x404040)
-    this.scene.add(this.light)
+    // LIGHTS
+    let spotLight = new THREE.SpotLight(0xffc881);
+    spotLight.position.set(0, 100, 0);
 
-    this.start = new Fbo(require('../shaders/basic.vert'), require('../shaders/start.frag'), this.renderer, { resolution: { type: "v2", value: new Vector2(this.width, this.height)}})
-    this.start.update()
-    
+    spotLight.castShadow = true;
+    spotLight.decay = 2;
+    spotLight.penumbra = 1;
+    spotLight.intensity = 2;
+    spotLight.angle = 0.5;
 
-    let uniformA = {
-      resolution: { type: "v2", value: new Vector2(this.width, this.height) }, 
-      texture: { type:"t", value: this.start.texture},
-      delta: {type:"f", value: 1.0},
-      feed: { type: "f", value: this.feed},
-      kill: { type: "f", value: this.kill}
-    }
+    this.scene.add(spotLight)
 
-    this.bufferA = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), this.renderer, uniformA)
-    this.bufferA.update()
+    // REACTION DIFFUSION CUBE
+    this.cube = new ReactionDiffusionCube(this.params, this.renderer)
+    this.scene.add(this.cube.mesh)
 
-    let uniformB = {
-      resolution: { type: "v2", value: new Vector2(this.width, this.height) },
-      texture: { type: "t", value: this.bufferA.texture},
-      delta: { type: "f",value: 1.0},
-      feed: { type: "f", value: this.feed},
-      kill: { type: "f", value: this.kill}
-    }
+    // GROUND
+    let geometryGround = new THREE.PlaneGeometry(250, 250);
+    let planeMaterial = new THREE.MeshPhongMaterial({ side: DoubleSide, color: 0x1a1a1a, shininess: 0, dithering: true});
+    this.plane = new THREE.Mesh(geometryGround, planeMaterial)
+    this.plane.receiveShadow = true;
+    this.plane.rotation.x = (90 * Math.PI) /180
+    this.plane.position.y = -50
 
-    this.bufferB = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), this.renderer, uniformB)
-    this.blackAndWhite = new Fbo(require('../shaders/basic.vert'), require('../shaders/blackWhite.frag'), this.renderer, { resolution: { type: "v2", value: new Vector2(this.width, this.height) }, texture: { type: "t", value: null }})
-
-    this.lastOutput = this.bufferA;
-    this.input = null;
-    this.output = null;
-
-
-    let geometry = new PlaneGeometry(50, 25, 1, 1);
-    let material = new MeshBasicMaterial({ map: this.bufferA.texture, side: DoubleSide });
-    this.plane = new Mesh(geometry, material);
     this.scene.add(this.plane)
+
+    this.controls.update();
+    this.onWindowResize()
   }
 
   add (element) {
@@ -96,30 +92,8 @@ export default class BasicScene {
   }
 
   render (delta) {
-
-    this.bufferA.shader.uniforms.feed.value = this.params.feed
-    this.bufferA.shader.uniforms.kill.value = this.params.kill
-    this.bufferB.shader.uniforms.feed.value = this.params.feed
-    this.bufferB.shader.uniforms.kill.value = this.params.kill
-    
-
-    for (let i=0; i<10; i++) {
-
-      this.input = this.lastOutput;
-      this.output = (this.lastOutput === this.bufferA) ? this.bufferB : this.bufferA;
-      this.lastOutput = this.output;
-
-      // this.lastOutput.shader.uniforms.texture = this.input.texture
-
-      this.output.shader.uniforms.texture.value = this.input.texture
-      this.output.update()
-      this.blackAndWhite.shader.uniforms.texture.value = this.output.texture
-      this.blackAndWhite.update()
-
-      this.plane.material.map = this.blackAndWhite.texture;
-    }
-
-    
+    this.cube.update(delta)    
+    this.controls.update();
     this.renderer.render(this.scene, this.camera)
   }
 }

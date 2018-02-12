@@ -1,0 +1,21 @@
+uniform vec2 resolution;
+uniform sampler2D texture;
+
+void main() {
+    vec2 location = gl_FragCoord.xy / resolution;
+    
+    float ux = 1.0 / resolution.x;
+    float uy = 1.0 / resolution.y; 
+    float border = 0.05;
+    float white = texture2D(texture, location).g;
+
+    float color = 1.0 / (1.0 - exp(0.25 - white));
+    
+    if (location.x <= border || location.x >= 1.0 - border || location.y <= border || location.y >= 1.0 - border) {
+        color = 0.0;
+    }
+
+    gl_FragColor = vec4(vec3(color), 1.0);
+}
+
+

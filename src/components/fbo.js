@@ -1,13 +1,14 @@
-import { ShaderMaterial, Scene, OrthographicCamera, WebGLRenderTarget, BufferGeometry, BufferAttribute, Mesh, NearestFilter, RGBFormat, FloatType } from 'three'
+import { ShaderMaterial, Scene, OrthographicCamera, WebGLRenderTarget, RepeatWrapping, BufferGeometry, BufferAttribute, Mesh, NearestFilter, RGBFormat, FloatType } from 'three'
 
 class FBO {
-    constructor(vert, frag, renderer, customUniforms) {        
-        this.width = 1024
+    constructor(vert, frag, renderer, customUniforms, customFilters = {}) {        
+        this.width = 512
         this.height = 512
 
         this.vert = vert
         this.frag = frag
         this.customUniforms = customUniforms != null ? customUniforms : {}
+        this.customFilters = customFilters
         
         this.renderer = renderer
 
@@ -60,12 +61,14 @@ class FBO {
         this.orthoCamera = new OrthographicCamera(-1, 1, 1, -1, 1 / Math.pow(2, 53), 1)
 
         //4 create a target texture
-        let options = {
+        let options = Object.assign({
             minFilter: NearestFilter,//important as we want to sample square pixels
             magFilter: NearestFilter,//
             format: RGBFormat,//could be RGBAFormat
-            type: FloatType//important as we need precise coordinates (not ints)
-        }
+            type: FloatType,
+            wrapS: RepeatWrapping,
+            wrapT: RepeatWrapping//important as we need precise coordinates (not ints)
+        }, this.customFilters)
         this.rtt = new WebGLRenderTarget(this.width, this.height, options)
 
         //5 the simulation:
