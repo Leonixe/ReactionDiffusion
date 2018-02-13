@@ -4,6 +4,7 @@ import { debug } from 'util';
 import dat from 'dat-gui'
 import ReactionDiffusionCube from './ReactionDiffusionCube'
 import { DoubleSide } from 'three';
+import { TweenLite } from 'gsap';
 /**
 * Build basic scene
 */
@@ -17,6 +18,9 @@ export default class BasicScene {
       kill: 0.062,
       feed: 0.0545
     }
+
+    this.cameraProperties = { zoom: 400 },
+
 
     this.gui = new dat.GUI()
     this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
@@ -32,10 +36,9 @@ export default class BasicScene {
 
     // CAMERA
     this.camera = new THREE.PerspectiveCamera(70, width / height, 0.1, 1000)
-    this.camera.position.set(0, 0, 50)
+    this.camera.position.set(0, 0, 300)
     this.camera.lookAt(new THREE.Vector3())
 
-    this.controls = new OrbitControls(this.camera);
     this.feed = this.params.feed;
     this.kill = this.params.kill;
     document.getElementById('threeJSContainer').appendChild(this.renderer.domElement)
@@ -58,6 +61,8 @@ export default class BasicScene {
     // REACTION DIFFUSION CUBE
     this.cube = new ReactionDiffusionCube(this.params, this.renderer)
     this.scene.add(this.cube.mesh)
+    this.controls = new OrbitControls(this.camera);
+
 
     // GROUND
     let geometryGround = new THREE.PlaneGeometry(250, 250);
@@ -68,7 +73,7 @@ export default class BasicScene {
     this.plane.position.y = -50
 
     this.scene.add(this.plane)
-
+    TweenLite.to(this.cameraProperties, 3.5, { zoom: "-=350", onUpdate: this.zoomHandler.bind(this), ease: Power2.easeOut });
     this.controls.update();
     this.onWindowResize()
   }
@@ -79,6 +84,10 @@ export default class BasicScene {
 
   remove (element) {
     this.scene.remove(element)
+  }
+
+  zoomHandler () {    
+    this.camera.position.z = this.cameraProperties.zoom
   }
 
   onWindowResize () {
@@ -92,6 +101,7 @@ export default class BasicScene {
   }
 
   render (delta) {
+    // this.camera.position.z +=0.5;
     this.cube.update(delta)    
     this.controls.update();
     this.renderer.render(this.scene, this.camera)
