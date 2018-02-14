@@ -22,9 +22,9 @@ export default class BasicScene {
     this.cameraProperties = { zoom: 400 },
 
 
-    this.gui = new dat.GUI()
-    this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
-    this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
+    // this.gui = new dat.GUI()
+    // this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
+    // this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
 
     this.scene = new THREE.Scene()
     this.scene.fog = new THREE.Fog(0x000000, -10, 230)
@@ -87,7 +87,7 @@ export default class BasicScene {
   }
 
   zoomHandler () {    
-    this.camera.position.z = this.cameraProperties.zoom
+    // this.camera.position.z = this.cameraProperties.zoom
   }
 
   onWindowResize () {

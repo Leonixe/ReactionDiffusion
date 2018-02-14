@@ -1,4 +1,4 @@
-import { ShaderMaterial, Scene, OrthographicCamera, WebGLRenderTarget, RepeatWrapping, BufferGeometry, BufferAttribute, Mesh, NearestFilter, RGBFormat, FloatType } from 'three'
+import { ShaderMaterial, Scene, OrthographicCamera, WebGLRenderTarget, RepeatWrapping, BufferGeometry, BufferAttribute, Mesh, NearestFilter, RGBAFormat, FloatType } from 'three'
 
 class FBO {
     constructor(vert, frag, renderer, customUniforms, customFilters = {}) {        
@@ -64,7 +64,7 @@ class FBO {
         let options = Object.assign({
             minFilter: NearestFilter,//important as we want to sample square pixels
             magFilter: NearestFilter,//
-            format: RGBFormat,//could be RGBAFormat
+            format: RGBAFormat,//could be RGBAFormat
             type: FloatType,
             wrapS: RepeatWrapping,
             wrapT: RepeatWrapping//important as we need precise coordinates (not ints)

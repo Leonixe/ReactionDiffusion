@@ -2,11 +2,20 @@ import Scene from './components/BasicScene'
 import ReactionDiffusionGrid from './components/ReactionDiffusionGrid'
 import reactor from './components/reactor'
 import * as THREE from 'three'
+import Vivus from 'vivus'
+import {TweenLite, TweenMax} from 'gsap'
 
 let scene = new Scene(
    window.innerWidth,
    window.innerHeight
 )
+
+new Vivus('logo_SVG', { duration: 50, type: 'sync' }, function () {
+  TweenLite.to('#logo', 3, { transform: "translateY(-21vw)", width: '4vw', height: '4vw', ease: Expo.easeOut });
+  TweenMax.staggerTo('#text_en div span', 2, {opacity: 1, 'margin-top':'0vw', ease: Expo.easeOut, onComplete: function(){
+    TweenLite.to('#text_fr', 1, { opacity: "1"});
+  }}, 0.5);
+});
 
 let lastUpdateDelta = 0
 
