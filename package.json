@@ -26,6 +26,8 @@
   "dependencies": {
     "dat-gui": "^0.5.0",
     "gsap": "^1.20.3",
+    "nouislider": "^11.0.3",
+    "rangeslider-js": "^3.0.2",
     "raw-loader": "^0.5.1",
     "three": "^0.89.0",
     "three-orbit-controls": "^82.1.0",

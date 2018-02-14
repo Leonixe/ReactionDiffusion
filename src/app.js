@@ -4,89 +4,55 @@ import reactor from './components/reactor'
 import * as THREE from 'three'
 import Vivus from 'vivus'
 import {TweenLite, TweenMax} from 'gsap'
+import rangesliderJs from 'rangeslider-js'
 
 let scene = new Scene(
    window.innerWidth,
    window.innerHeight
 )
+var sliderEl = document.getElementById('slider1');
+rangesliderJs.create(sliderEl)
 
-new Vivus('logo_SVG', { duration: 50, type: 'sync' }, function () {
-  TweenLite.to('#logo', 3, { transform: "translateY(-21vw)", width: '4vw', height: '4vw', ease: Expo.easeOut });
-  TweenMax.staggerTo('#text_en div span', 2, {opacity: 1, 'margin-top':'0vw', ease: Expo.easeOut, onComplete: function(){
-    TweenLite.to('#text_fr', 1, { opacity: "1"});
-  }}, 0.5);
+
+new Vivus('logo_SVG', { duration: 100, type: 'sync' }, function () {
+  TweenLite.delayedCall(1, function() {
+    TweenLite.to('#logo', 3, {opacity: 0, onComplete: function () {
+        TweenLite.to('#logo', 0, { width: '4vw', height: '4vw', top: '3vw' })
+        TweenLite.to('#logo', 1, { opacity: "1", bottom: 'inherit', ease: Expo.easeOut, onComplete: function () {
+            TweenMax.staggerTo('#text_en div span', 2, {opacity: 1, 'margin-top': '0vw', ease: Expo.easeOut, onComplete: function () {
+                TweenLite.to('#author', 1, { opacity: "1" });
+                TweenLite.to('#text_fr', 1, { opacity: "0.6" });
+                TweenLite.to('#button_container', 1, { opacity: "1", onComplete: function(){
+                  TweenLite.to('#button_container svg', 1, { opacity: "1" });
+                  new Vivus('button_svg', { duration: 100, type: 'sync' });
+                  TweenLite.to('#button_text', 0.5, { opacity: "1" });
+                } });
+              }
+            }, 0.5);
+          }
+        });
+      }
+    });
+  })
 });
+
+let cameraProperties = { zoom: 400 };
+
+document.getElementById('button_container').addEventListener('click', function(){
+  TweenLite.to('#content', 1, { opacity: "0", display: 'none' });
+  TweenLite.to(cameraProperties, 3.5, { zoom: "-=350", ease: Power2.easeOut });
+})
 
 let lastUpdateDelta = 0
 
 const deltaTime = 1000
-// const canvas =  document.getElementById('canvas')
-// const ctx = canvas.getContext('2d')
 
-// const grids = {
-//   current: new ReactionDiffusionGrid(canvas.width / 2, canvas.height / 2),
-//   next: new ReactionDiffusionGrid(canvas.width / 2, canvas.height / 2)
-// }
-
-// const cx = grids.current.width / 2.0
-// const cy = grids.current.height / 2.0
-
-// for (let x = 0; x < grids.current.width; ++x) {
-//   for (let y = 0; y < grids.current.height; ++y) {
-//     grids.current.setB(x, y, 0)
-//     grids.current.setA(x, y, 0.9)
-//   }
-// }
-
-// for (let x = -100; x < 100; ++x) {
-//   for (let y = -100; y < 100; ++y) {
-//     if (Math.sqrt(x*x*0.5 + y*y) <= 3) {
-//       grids.current.setB(x + cx, y + cy, 0.9999)
-//     }
-//   }
-// }
-
-// const AColor = new THREE.Color(1,1,1)
-// const BColor = new THREE.Color(0,0,0)
-// const cellColor = new THREE.Color(0,0,0)
-
-// function swap (grids) {
-//   const tmp = grids.current
-//   grids.current = grids.next
-//   grids.next = tmp
-// }
 
 function animate (delta) {
-  //while (delta - lastUpdateDelta > deltaTime) {
-  // for (let i = 0; i < 10; ++i) {
-  //   // grids.current.react(grids.next, 1.0, 0.5, 0.018, 0.051, 1.0)
-  //   // grids.current.react(grids.next, 1.0, 0.5, 0.025, 0.06, 1.0) // PULSATING MITOSIS
-
-  //   // grids.current.react(grids.next, 1.0, 0.5, 0.026, 0.055, 1.0) // MAZE CHAOS
-
-  //   // grids.current.react(grids.next, 1.0, 0.5, 0.03, 0.0565, 1.0) // RESONANCE
-  //   grids.current.react(grids.next, 1.0, 0.5, 0.034, 0.0618, 1.0) // SPOTS
-  //   // grids.current.react(grids.next, 1.0, 0.5, 0.037, 0.06, 1.0) // SPIDER
-  //   // grids.current.react(grids.next, 1.0, 0.5, 0.046, 0.0594, 1.0)  // WATER
-  //   // grids.current.react(grids.next, 1.0, 0.5, 0.0367, 0.0649, 1.0) // MITOSIS
-  //   // grids.current.react(grids.next, 1.0, 0.5, 0.0545, 0.062, 1.0)  // MAZE
-  //   swap(grids)
-  // }
-
-  // let max = Number.NEGATIVE_INFINITY
-
-  // for (let x = 0; x < grids.current.width; ++x) {
-  //   for (let y = 0; y < grids.current.height; ++y) {
-  //     const total = grids.current.getA(x, y) + grids.current.getB(x, y)
-
-  //     ctx.fillStyle = cellColor.set(0, 0, 0)
-  //                              .lerp(AColor, grids.current.getA(x, y) / total)
-  //                              .lerp(BColor, grids.current.getB(x, y) / total)
-  //                              .getStyle()
-  //     ctx.fillRect(x , y , 4, 4)
-  //   }
-  // }
   scene.render(delta);
+  if (cameraProperties.zoom > 50) {
+    scene.camera.position.z = cameraProperties.zoom
+  }
   requestAnimationFrame(animate)
 }
 

@@ -19,9 +19,6 @@ export default class BasicScene {
       feed: 0.0545
     }
 
-    this.cameraProperties = { zoom: 400 },
-
-
     // this.gui = new dat.GUI()
     // this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
     // this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
@@ -61,7 +58,7 @@ export default class BasicScene {
     // REACTION DIFFUSION CUBE
     this.cube = new ReactionDiffusionCube(this.params, this.renderer)
     this.scene.add(this.cube.mesh)
-    this.controls = new OrbitControls(this.camera);
+    // this.controls = new OrbitControls(this.camera);
 
 
     // GROUND
@@ -73,8 +70,7 @@ export default class BasicScene {
     this.plane.position.y = -50
 
     this.scene.add(this.plane)
-    TweenLite.to(this.cameraProperties, 3.5, { zoom: "-=350", onUpdate: this.zoomHandler.bind(this), ease: Power2.easeOut });
-    this.controls.update();
+    // this.controls.update();
     this.onWindowResize()
   }
 
@@ -84,10 +80,6 @@ export default class BasicScene {
 
   remove (element) {
     this.scene.remove(element)
-  }
-
-  zoomHandler () {    
-    // this.camera.position.z = this.cameraProperties.zoom
   }
 
   onWindowResize () {
@@ -103,7 +95,7 @@ export default class BasicScene {
   render (delta) {
     // this.camera.position.z +=0.5;
     this.cube.update(delta)    
-    this.controls.update();
+    // this.controls.update();
     this.renderer.render(this.scene, this.camera)
   }
 }

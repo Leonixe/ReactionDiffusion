@@ -1,3 +1,14 @@
+@font-face {
+  font-family: "Bluu Bold";
+  src: url("./assets/BluuNext-Bold.otf");
+}
+
+@font-face {
+  font-family: "Bluu BoldItalic";
+  src: url("./assets/BluuNext-Bolditalic.otf");
+}
+
+
 body {
     margin: 0px;
     overflow: hidden;
@@ -33,10 +44,14 @@ body {
     right: 0px;
     top: 0px;
     margin: auto;
-    color: white;
-    width: 30vw;
+    color: #fef5dd;
+    width: auto;
     font-size: 1.5vw;
     height: 10vw;
+    font-family: "Bluu BoldItalic";
+    opacity: 0.5;
+    letter-spacing: 0.05vw;
+
     div{
         text-align: center;
         margin-bottom: 0.6vw;
@@ -69,9 +84,11 @@ body {
     font-size: 1vw;
     height: 10vw;
     opacity: 0;
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
     div{
         text-align: center;
-        margin-bottom: 0.6vw;
+        margin-bottom: 0.1vw;
         height: 1.5vw;
     }
     span {
@@ -90,6 +107,10 @@ body {
     padding-right: 5vw;
     text-align: right;
     font-size: 1.5vw;
+    font-family: "Bluu BoldItalic";
+    transform: skewX(-11deg);
+    letter-spacing: 0.1vw;
+    opacity: 0;
 
     &::before {
         content: '';
@@ -99,7 +120,7 @@ body {
         background-color: #c07914;
         top: 0px;
         bottom: 0px;
-        right: 13vw;
+        right: 15vw;
         margin: auto;
     }
 }
@@ -111,4 +132,113 @@ body {
     left: 0px;
     right: 0px;
     margin: auto;
+
+    #button_container {
+        position: absolute;
+        width: 13vw;
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        bottom: 7vw;
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 4vw;
+        cursor: pointer;
+
+        svg {
+            height: 3vw;
+            position: absolute;
+            opacity: 0;
+
+            .st0 {
+                transition: stroke 0.5s;
+            }
+        }
+
+        #button_text {
+            color: #c07914;
+            opacity: 0;
+            font-family: "Bluu BoldItalic";
+            font-size: 1vw;
+            transform: skewX(-11deg);
+            transition: 0.5s;
+        }
+
+        &:hover {
+
+            .st0 {
+                stroke: #eba541 !important;
+             }
+
+            #button_text {
+                color: #eba541;
+                opacity: 0;
+                font-family: "Bluu BoldItalic";
+                font-size: 1vw;
+                transform: skewX(-11deg);
+            }
+        }
+    }
+}
+
+.slidecontainer {
+    position: absolute;
+    width: 14vw;
+    right: 2vw;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+    height: 2vw;
+}
+.rangeslider {
+    position: relative;
+    display: flex;
+    cursor: pointer;
+    height: 25px;
+    width: 100%;
+    align-items: center;
+
+    .rangeslider__fill__bg {
+        background: #3f240b;
+        width: 100%;
+        display: block;
+        position: absolute;
+        height: 0.1vw;
+        z-index: 2;
+        will-change: width;
+    }
+
+    .rangeslider__fill {
+        display: block;
+        position: absolute;
+        height: 0.1vw;
+        z-index: 2;
+        background: #d07725;
+        will-change: width;
+    }
+    .rangeslider__handle {
+        will-change: width,height,top;
+        width: 0.8vw;
+        height: 0.8vw;
+        display: inline-block;
+        z-index: 3;
+        cursor: pointer;
+        -webkit-transition: width .1s ease-in-out,height .1s ease-in-out,top .1s ease-in-out;
+        transition: width .1s ease-in-out,height .1s ease-in-out,top .1s ease-in-out;
+        position: absolute;
+        top: 50%;
+        background: #d07725;
+
+        &::after {
+            content: '';
+            height: 1.2vw;
+            width: 1.2vw;
+            margin-right: 0.1vw;
+            border: 0.08vw #d07725 solid;
+            position: absolute; 
+            transform: translate3d(-0.26vw, -0.26vw,0);
+        }
+    }
 }

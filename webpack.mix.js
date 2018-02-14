@@ -15,7 +15,7 @@ let mix = require('laravel-mix');
       .copy('src/index.html', 'dist/index.html')
       .copy('src/shaders', 'dist/shaders')
       .copy('src/assets', 'dist/assets')
-      // .options({processCssUrls: false})
+      .options({processCssUrls: false})
       .sass('src/scss/app.scss', 'dist/app.css')
       .webpackConfig({
          module: {
