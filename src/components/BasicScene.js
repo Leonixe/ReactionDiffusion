@@ -19,9 +19,9 @@ export default class BasicScene {
       feed: 0.0545
     }
 
-    // this.gui = new dat.GUI()
-    // this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
-    // this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
+    this.gui = new dat.GUI()
+    this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
+    this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
 
     this.scene = new THREE.Scene()
     this.scene.fog = new THREE.Fog(0x000000, -10, 230)
@@ -58,7 +58,7 @@ export default class BasicScene {
     // REACTION DIFFUSION CUBE
     this.cube = new ReactionDiffusionCube(this.params, this.renderer)
     this.scene.add(this.cube.mesh)
-    // this.controls = new OrbitControls(this.camera);
+    this.controls = new OrbitControls(this.camera);
 
 
     // GROUND
