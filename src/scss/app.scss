@@ -194,7 +194,7 @@ body {
 }
 .rangeslider {
     position: relative;
-    display: flex;
+    display: none;
     cursor: pointer;
     height: 25px;
     width: 100%;
@@ -218,6 +218,7 @@ body {
         background: #d07725;
         will-change: width;
     }
+
     .rangeslider__handle {
         will-change: width,height,top;
         width: 0.8vw;
