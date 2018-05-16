@@ -75,6 +75,11 @@ export default class BasicScene {
   }
   activateOrbitControl () {
     this.controls = new OrbitControls(this.camera);
+    this.controls.enableDamping = true
+    this.controls.enablePan = false
+    this.controls.enableKeys = false
+    this.controls.dampingFactor = 0.1
+    this.controls.rotateSpeed = 0.5
     this.activateOrbit = true;
     this.cube.ready = true;
     this.cube.restartCenter()

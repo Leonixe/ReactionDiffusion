@@ -52,7 +52,7 @@ export default class ReactionDiffusionCube {
 
         let geometry = new THREE.BoxGeometry(25, 25, 25);
 
-        let phongMaterial = new THREE.MeshPhongMaterial({ normalMap: this.blackAndWhite.texture, color: 0xFFFFFF })
+        let phongMaterial = new THREE.MeshPhongMaterial({ normalMap: this.blackAndWhite.texture, color: 0x000000 })
 
         let urls = [
             './assets/pos-x.png',

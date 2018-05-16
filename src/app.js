@@ -81,6 +81,7 @@ new Vivus('logo_SVG', { duration: 100, type: 'sync' }, function () {
 let cameraProperties = { zoom: 400 };
 
 document.getElementById('button_container').addEventListener('click', function(){
+  document.getElementById('audioPlayer').play()
   TweenLite.to('#content', 1, { opacity: "0", display: 'none' });
   TweenLite.to(cameraProperties, 3.5, { zoom: "-=350", ease: Power2.easeOut });
   TweenLite.to('#ui_Button', 1, { opacity: "1", display: 'flex' });
