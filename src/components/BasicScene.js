@@ -14,21 +14,16 @@ const OrbitControls = require('three-orbit-controls')(THREE)
 export default class BasicScene {
   constructor (width, height) {
 
-    this.params = {
-      kill: 0.062,
-      feed: 0.0545
-    }
 
-    this.gui = new dat.GUI()
-    this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
-    this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
+    // this.gui = new dat.GUI()
+    // this.gui.add(this.params, 'kill').min(0.04500).max(0.07).step(0.00001)
+    // this.gui.add(this.params, 'feed').min(0.0100).max(0.1).step(0.0001)
 
     this.scene = new THREE.Scene()
     this.scene.fog = new THREE.Fog(0x000000, -10, 230)
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.setClearColor({ color: 0x1a1a1a})
-    this.renderer.shadowMapEnabled = true;
     // this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
     // CAMERA
@@ -36,8 +31,6 @@ export default class BasicScene {
     this.camera.position.set(0, 0, 300)
     this.camera.lookAt(new THREE.Vector3())
 
-    this.feed = this.params.feed;
-    this.kill = this.params.kill;
     document.getElementById('threeJSContainer').appendChild(this.renderer.domElement)
 
     this.onWindowResize = this.onWindowResize.bind(this)
@@ -56,9 +49,8 @@ export default class BasicScene {
     this.scene.add(spotLight)
 
     // REACTION DIFFUSION CUBE
-    this.cube = new ReactionDiffusionCube(this.params, this.renderer)
+    this.cube = new ReactionDiffusionCube(this.renderer)
     this.scene.add(this.cube.mesh)
-    this.controls = new OrbitControls(this.camera);
 
 
     // GROUND
@@ -70,7 +62,7 @@ export default class BasicScene {
     this.plane.position.y = -50
 
     this.scene.add(this.plane)
-    // this.controls.update();
+    this.activateOrbit = false;
     this.onWindowResize()
   }
 
@@ -80,6 +72,12 @@ export default class BasicScene {
 
   remove (element) {
     this.scene.remove(element)
+  }
+  activateOrbitControl () {
+    this.controls = new OrbitControls(this.camera);
+    this.activateOrbit = true;
+    this.cube.ready = true;
+    this.cube.restartCenter()
   }
 
   onWindowResize () {
@@ -93,9 +91,10 @@ export default class BasicScene {
   }
 
   render (delta) {
-    // this.camera.position.z +=0.5;
-    this.cube.update(delta)    
-    // this.controls.update();
+    this.cube.update(delta)   
+    if (this.activateOrbit) {
+      this.controls.update();
+    }
     this.renderer.render(this.scene, this.camera)
   }
 }

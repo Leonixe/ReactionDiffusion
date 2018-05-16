@@ -1,0 +1,236 @@
+{
+    "url": "https://api.afp.com/v1/api/latest?lang=fr&access_token=fc250ce0-c410-444c-82d4-39978e502425",
+    "ok": true,
+    "status": 200,
+    "statusText": "",
+    "headers": {
+        "map": {
+            "pragma": [
+                "no-cache"
+            ],
+            "content-type": [
+                "application/json;charset=UTF-8"
+            ],
+            "cache-control": [
+                "no-cache, no-store, max-age=0, must-revalidate"
+            ],
+            "expires": [
+                "0"
+            ]
+        }
+    },
+    "body": {
+        "response": {
+            "status": {
+                "code": 0,
+                "reason": "Success"
+            },
+            "took": 4,
+            "numFound": 1051,
+            "docs": [
+                {
+                    "country": "CHE",
+                    "city": "Genève",
+                    "language": "french",
+                    "title": "Syrie: Lavrov demande aux rebelles d'\"agir\" pour que la trêve fonctionne",
+                    "entity_organisation": [
+                        "Armee Syrienne",
+                        "Gouvernement Syrien",
+                        "Comite International",
+                        "Croix Rouge"
+                    ],
+                    "entity_function": [
+                        "Journaliste",
+                        "Ministre",
+                        "Porte Parole"
+                    ],
+                    "entity_company": [
+                        "Etat"
+                    ],
+                    "urgency": 4,
+                    "provider": "AFP",
+                    "href": "https://api.afp.com/objects/api/get?id=a1kkIS0nShZKQlFqV0hDRh0BGQwZKydaSl9Yb1YjQG0mXVwedgRwfXR0CwF5Bw1wCBgNbxxkdRVmBBAAaXhidgVrSC4pDVJZIAkGKiYjVVBDRR4wUEkJcl1SSFRfKzEAfn5RJlIrRDpjV0lALUYkNnl3DAsfAwl0DBkCAAoH.xml",
+                    "lang": "fr",
+                    "keyword": [
+                        "Syrie",
+                        "conflit",
+                        "diplomatie",
+                        "ONU",
+                        "Russie",
+                        "aide",
+                        "Bachar el-Assad",
+                        "Sergueï Lavrov"
+                    ],
+                    "publicIdentifier": "newsml:afp.com:20180228T155159Z:TX-PAR-PJV72.xml",
+                    "headline": "Syrie: Lavrov demande aux rebelles d'\"agir\" pour que la trêve fonctionne",
+                    "slug": [
+                        "syrie",
+                        "conflit",
+                        "diplomatie",
+                        "onu",
+                        "russie",
+                        "aide",
+                        "bachar el",
+                        "assad",
+                        "sergueï lavrov"
+                    ],
+                    "news": [
+                        "Les rebelles et ceux qui les soutiennent doivent \"agir\" pour que la trêve en Syrie fonctionne, a affirmé mercredi le chef de la diplomatie russe Sergueï Lavrov, ajoutant que Moscou continuerait à soutenir l'armée syrienne pour \"éradiquer la menace terroriste\".",
+                        "\"La Russie et le gouvernement syrien ont déjà annoncé la création de couloirs humanitaires dans la Ghouta orientale\", a déclaré M. Lavrov, devant le Conseil des droits de l'homme de l'ONU à Genève.",
+                        "\"Nous appelons les membres de la soi-disant coalition américaine à assurer le même accès humanitaire aux zones sous leur contrôle\", a-t-il ajouté.",
+                        "\"Maintenant c'est au tour des militants et de leurs soutiens d'agir. Les militants (qui sont) retranchés là-bas continuent à bombarder Damas, bloquant les livraisons d'aide et l'évacuation de ceux qui souhaitent partir\", a-t-il dit.",
+                        "Quelque 400.000 personnes sont prises au piège dans l'enclave de la Ghouta orientale, contrôlée par des groupes rebelles, dont des jihadistes.",
+                        "Une trêve quotidienne de cinq heures -- de 09H00 à 14H00 (07H00 à 12H00 GMT) -- pour permettre l'entrée de l'aide ou la sortie d'habitants ou de blessés de l'enclave, a été décrétée lundi par la Russie, le grand allié du régime de Bachar al-Assad, mais les protagonistes se sont aussitôt accusés mutuellement de l'avoir violée.",
+                        "Devant le Conseil, M. Lavrov a assuré que son pays continuera de fournir \"un soutien à l'armée syrienne dans ses efforts pour éradiquer définitivement la menace terroriste\".",
+                        "Parlant ensuite aux journalistes, il a accusé les Etats-Unis et leurs alliés en Syrie de \"volontairement ou involontairement, épargner (les) terroristes\".",
+                        "\"Nous avons soulevé cette question à de multiples reprises avec Washington et il n'y a pas de réponse crédible\", a ajouté le ministre.",
+                        "\"Mais il est absolument clair que tant que le terrorisme sera présent en Syrie, il faudra l'éliminer totalement\", a-t-il martelé.",
+                        "- Cadavres en décomposition -",
+                        "M. Lavrov a par ailleurs déclaré que \"le peuple syrien est aujourd'hui confronté à la crise humanitaire la plus grave\".",
+                        "Il a notamment évoqué la situation à Raqa (nord), l'ancien bastion du groupe jihadiste Etat islamique (EI) en Syrie, repris par la coalition arabo-kurde soutenue par la coalition internationale sous direction américaine, en octobre.",
+                        "Il est \"nécessaire d'envoyer d'urgence une mission d'évaluation conjointe ONU-CICR\" à Raqa, qui \"a été bombardée (...) et est à la merci de la coalition\" dirigée par les Etats-Unis, a-t-il dit au Conseil.",
+                        "A ce sujet, une porte-parole du Comité international de la Croix-Rouge, Iolanda Jaquemet, a expliqué que \"pour ce qui est de l'évaluation des besoins, le CICR se réserve le droit, en Syrie comme dans tous les autres contextes où nous travaillons, de la mener à bien de manière indépendante\" et que \"donc une telle mission conjointe n'est pas prévue\".",
+                        "Devant les journalistes, M. Lavrov a décrit une situation catastrophique à Raqa \"où il y a encore des cadavres en décomposition dans les rues, pas d'eau, pas de toilettes et des mines sur l'ensemble du territoire\".",
+                        "\"Personne ne s'occupe de cet énorme désastre humanitaire\", a-t-il dit.",
+                        "Le ministre a également appelé à la poursuite des discussions de paix sur la Syrie, après une rencontre avec l'émissaire spécial de l'ONU sur la Syrie, Staffan de Mistura.",
+                        "Déclenché en 2011 par la répression de manifestations pacifiques par le régime de Bachar al-Assad, le conflit en Syrie s'est complexifié au fil des ans avec l'implication de pays étrangers et de groupes jihadistes, sur un territoire de plus en plus morcelé.",
+                        "Il a fait plus de 340.000 morts et des millions de déplacés et réfugiés.",
+                        "apo-nl/gca/cn"
+                    ],
+                    "product": "news",
+                    "advisory": "ajoute réaction CICR",
+                    "created": "2018-02-28T15:51:59Z",
+                    "iptc": [
+                        "16000000",
+                        "11014000",
+                        "11005000",
+                        "11000000"
+                    ],
+                    "published": "2018-02-28T15:51:59Z",
+                    "version": [
+                        "3ELEAD"
+                    ],
+                    "revision": 1,
+                    "entity_location": [
+                        "Syria",
+                        "Moscow(RU)",
+                        "Russia",
+                        "Genève",
+                        "Damascus",
+                        "United States",
+                        "Washington(US)"
+                    ],
+                    "serial": "a1kkIS0nShZKQlFqV0hDRh0BGQwZKydaSl9Yb1YjQG0mXVwedgRwfXR0CwF5Bw1wCBgNbxxkdRVmBBAAaXhidgVrSC4pDVJZIAkGKiYjVVBDRR4wUEkJcl1SSFRfKzEAfn5RJlIrRDpjV0lALUYkNnl3DAsfAwl0DBkCAAoH.xml",
+                    "uno": "newsml.afp.com.20180228T155159Z.TX-PAR-PJV72",
+                    "topic": [
+                        "ELU",
+                        "DAB",
+                        "AMW",
+                        "EUA",
+                        "MOA",
+                        "FRS"
+                    ],
+                    "objectName": "Syrie: Lavrov demande aux rebelles d'\"agir\" pour que la trêve fonctionne",
+                    "country_only": [
+                        "ALL"
+                    ],
+                    "entity_person": [
+                        "Serguei Lavrov",
+                        "Bachar Al Assad",
+                        "Iolanda Jaquemet"
+                    ],
+                    "status": "Usable"
+                },
+                {
+                    "country": "CHE",
+                    "city": "Genève",
+                    "entity_video": "no",
+                    "caption": [
+                        "Le ministre russe des Affaires étrangères Sergueï Lavrov devant le Conseil des droits de l'homme de l'ONU, le 28 février 2018 à Genève"
+                    ],
+                    "language": "french",
+                    "title": "Syrie: Lavrov demande aux rebelles d'\"agir\" pour que la trêve fonctionne",
+                    "bagItem": [
+                        {
+                            "medias": [
+                                {
+                                    "role": "HighDef",
+                                    "width": 768,
+                                    "href": "https://api.afp.com/objects/api/medias?id=a1kkIS0nShZHX1k3WkVdQ1dCAkheKjZCSh0GcQBqB3Z8AwIFclJ0ciYjWAEZA1t2WEhWU1YEFQlVcXUdWlcCdVYgVnNzUx9aNFN%2BJi0iBH5CVF0pUENHE0dZSQVxKiBIVVtaMhoCfCYiV19EPRIkPTQvS1xeCwlwCx8BBAMFGQ4DfXo%3D.jpg",
+                                    "type": "Photo",
+                                    "height": 512
+                                },
+                                {
+                                    "role": "Quicklook",
+                                    "width": 245,
+                                    "href": "https://api.afp.com/objects/api/medias?id=a1kkIS0nShZHX1k3WkVdQ1dCAkheKjZCSh0GcQBqB3B9VgEDfFF4cCZzDAEVBg4hAU5SDAQIHQwHfSEdCwsEIgB2VXF8Bh9aNFN%2BJi0iBH5CVF0pUENHE0dZSQVxKiBIVVtaMhoCfCYiV19EPRIkPTQvS1xeCwlwCx8BBAMFGQ4DfXo%3D.jpg",
+                                    "type": "Photo",
+                                    "height": 163
+                                },
+                                {
+                                    "role": "IPad",
+                                    "width": 1024,
+                                    "href": "https://api.afp.com/objects/api/medias?id=a1kkIS0nShZHX1k3WkVdQ1dCAkheKjZCSh0GcQBqASd3UwVVJQF0cHZ%2BAQ0VUgpzCksCBlAGTAwGI3EVAQoGcgR2CSUnCx9aNFN%2BJi0iBH5CVF0pUENHE0dZSQVxKiBIVVtaMhoCfCYiV19EPRIkPTQvS1xeCwlwCx8BBAMFGQ4DfXo%3D.jpg",
+                                    "type": "Photo",
+                                    "height": 682
+                                },
+                                {
+                                    "role": "Preview",
+                                    "width": 512,
+                                    "href": "https://api.afp.com/objects/api/medias?id=a1kkIS0nShZHX1k3WkVdQ1dCAkheKjZCSh0GcQBqB3Z8AwIFclJ0ciYjWAEZA1t2WEhWU1YEFQlVcXUdWlcCdVYgVnNzUxxgNlE3LCExF1NdUQcmUEkJcl1SSFRfKzELTFtQfHAqUiYpW19DaXMNICMjV01UEF09SURGUEENHA0Ed3ccCAcAdwJ9CA%3D%3D.jpg",
+                                    "type": "Photo",
+                                    "height": 342
+                                },
+                                {
+                                    "role": "Squared120",
+                                    "width": 120,
+                                    "href": "https://api.afp.com/objects/api/medias?id=a1kkIS0nShZHX1k3WkVdQ1dCAkheKjZCSh0GcQBqB3B9VgEDfFF4cCZzDAEVBg4hAU5SDAQIHQwHfSEdCwsEIgB2VXF8BhxjNUEgNyEiCAsdGFI1XhJXXFYNaldUIC5EV0ESNF4hDQQqUFRcLVoyaAMKXF5IWEw8H0hMRVtCSEsLdHcfCwcFcAJxBnZ9Cg%3D%3D.jpg",
+                                    "type": "Photo",
+                                    "height": 120
+                                }
+                            ],
+                            "creator": "Fabrice COFFRINI",
+                            "provider": "AFP",
+                            "uno": "7591356f57bea845c3aebfd481c470ce64aef06a.jpg",
+                            "caption": "Le ministre russe des Affaires étrangères Sergueï Lavrov devant le Conseil des droits de l'homme de l'ONU, le 28 février 2018 à Genève",
+                            "source": "AFP"
+                        }
+                    ],
+                    "bagUno": [
+                        "7591356f57bea845c3aebfd481c470ce64aef06a.jpg"
+                    ],
+                    "entity_organisation": [
+                        "Armee Syrienne",
+                        "Gouvernement Syrien",
+                        "Comite International",
+                        "Croix Rouge"
+                    ],
+                    "entity_function": [
+                        "Journaliste",
+                        "Ministre",
+                        "Porte Parole"
+                    ],
+                    "entity_company": [
+                        "Etat"
+                    ],
+                    "urgency": 5,
+                    "provider": "afp.com",
+                    "href": "https://api.afp.com/objects/api/get?id=a1kkIS0nShZHX1k3WkVdQ1dCAlZTMjECCwIDblkgRzAoXlxdIBo0NypoV1xaRVUpF0xSRRxTQlUYd3IcAQIGcw9rVCwmHAABIwcqIGo%2BVFUSVVEhBGpbV1dcRFZFYzdEXQ9zLlUgXCorQRx3CFEmICoyQB9ITkgsS0hHCAMFHwoDdHMYDQQBeQ8%3D.xml",
+                    "lang": "fr",
+                    "publicIdentifier": "newsml:afp.com:20180228:doc-11g3ke.xml",
+                    "headline": "Syrie: Lavrov demande aux rebelles d'\"agir\" pour que la trêve fonctionne",
+                    "slug": [
+                        "syrie",
+                        "conflit",
+                        "diplomatie",
+                        "onu",
+                        "russie",
+                        "aide"
+                    ],
+                    "news": [
+                        "Les rebelles et ceux qui les soutiennent doivent \"agir\" pour que la trêve en Syrie fonctionne, a affirmé mercredi le chef de la diplomatie russe Sergueï Lavrov, ajoutant que Moscou continuerait à soutenir l'armée syrienne pour \"éradiquer la menace terroriste\".",
+                        "\"La Russie et le gouvernement syrien ont déjà annoncé la création de couloirs humanitaires dans la Ghouta orientale\", a déclaré M. Lavrov, devant le Conseil des droits de l'homme de l'ONU à Genève.",
+                        "\"Nous appelons les membres de la soi-disant coalition américaine à assurer le même accès humanitaire aux zones sous leur contrôle\", a-t-il ajouté.",
+                        "\"Maintenant c'est au tour des militants et de leurs soutiens d'agir. Les militants (qui sont) retranchés là-bas continuent à bombarder Damas, bloquant les livraisons d'aide et l'évacuation de ceux qui souhaitent partir\", a-t-il dit.",
+                        "Quelque 400.000 personnes sont prises au piège dans l'enclave de la Ghouta orientale, contrôlée par des groupes rebelles, dont des jihadistes.",
+                        "Une trêve quotidienne de cinq heures -- de 09H00 à 14H00 (07H00 à 12H00 GMT) -- pour permettre l'entrée de l'aide ou la sortie d'habitants ou de blessés de l'enclave, a été décrétée lundi par la Russie, le grand allié du régime de Bachar al-Assad, mais les protagonistes se sont aussitôt accusés mutuellement de l'avoir violée.","Devant le Conseil, M. Lavrov a assuré que ...

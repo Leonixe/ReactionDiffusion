@@ -6,10 +6,14 @@ import Fbo from './fbo'
 */
 
 export default class ReactionDiffusionCube {
-    constructor(params, renderer) {
-        this.params = params
+    constructor(renderer) {
         this.width = 512;
         this.height = 512;
+        this.feed = 0.0545;
+        this.kill = 0.062;
+        this.ready = false;
+        let isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification))
+        this.repeat = isSafari ? 3 : 10;
 
         this.start = new Fbo(require('../shaders/basic.vert'), require('../shaders/start.frag'), renderer, { resolution: { type: "v2", value: new THREE.Vector2(this.width, this.height) } })
         this.start.update()
@@ -18,8 +22,8 @@ export default class ReactionDiffusionCube {
             resolution: { type: "v2", value: new THREE.Vector2(this.width, this.height) },
             texture: { type: "t", value: this.start.texture },
             delta: { type: "f", value: 1.0 },
-            feed: { type: "f", value: this.params.feed },
-            kill: { type: "f", value: this.params.kill }
+            feed: { type: "f", value: this.feed },
+            kill: { type: "f", value: this.kill }
         }
 
         this.bufferA = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), renderer, uniformA)
@@ -29,8 +33,8 @@ export default class ReactionDiffusionCube {
             resolution: { type: "v2", value: new THREE.Vector2(this.width, this.height) },
             texture: { type: "t", value: this.bufferA.texture },
             delta: { type: "f", value: 1.0 },
-            feed: { type: "f", value: this.params.feed },
-            kill: { type: "f", value: this.params.kill }
+            feed: { type: "f", value: this.feed },
+            kill: { type: "f", value: this.kill }
         }
 
         this.bufferB = new Fbo(require('../shaders/basic.vert'), require('../shaders/rd.frag'), renderer, uniformB)
@@ -48,15 +52,15 @@ export default class ReactionDiffusionCube {
 
         let geometry = new THREE.BoxGeometry(25, 25, 25);
 
-        let phongMaterial = new THREE.MeshPhongMaterial({ normalMap: this.blackAndWhite.texture, color: 0x0F0F0F })
+        let phongMaterial = new THREE.MeshPhongMaterial({ normalMap: this.blackAndWhite.texture, color: 0xFFFFFF })
 
         let urls = [
-            '../assets/pos-x.png',
-            '../assets/neg-x.png',
-            '../assets/pos-y.png',
-            '../assets/neg-y.png',
-            '../assets/pos-z.png',
-            '../assets/neg-z.png'
+            './assets/pos-x.png',
+            './assets/neg-x.png',
+            './assets/pos-y.png',
+            './assets/neg-y.png',
+            './assets/pos-z.png',
+            './assets/neg-z.png'
         ],
 
         cubemap = THREE.ImageUtils.loadTextureCube(urls);
@@ -83,19 +87,36 @@ export default class ReactionDiffusionCube {
         return this.cube;
     }
 
-    update(delta) {
+    restartCenter () {
+        this.bufferA.shader.uniforms.texture.value = this.start.texture;
+        this.bufferA.update()
+    }
 
-        this.bufferA.shader.uniforms.feed.value = this.params.feed
-        this.bufferA.shader.uniforms.kill.value = this.params.kill
-        this.bufferB.shader.uniforms.feed.value = this.params.feed
-        this.bufferB.shader.uniforms.kill.value = this.params.kill
+    restartAngles () {
+
+    }
+
+    updateFeed (feed) {
+        this.feed = feed;
+    }
+
+    updateKill (kill) {
+        this.kill = kill;
+    }
+
+    update(delta) {
+        if (!this.ready) return
+        this.bufferA.shader.uniforms.feed.value = this.feed
+        this.bufferA.shader.uniforms.kill.value = this.kill
+        this.bufferB.shader.uniforms.feed.value = this.feed
+        this.bufferB.shader.uniforms.kill.value = this.kill
 
         // this.cube.rotation.x += 0.001
         this.cube.rotation.y += 0.001
         this.cube.position.y = Math.cos(delta / 1500)
 
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < this.repeat; i++) {
 
             this.input = this.lastOutput;
             this.output = (this.lastOutput === this.bufferA) ? this.bufferB : this.bufferA;
